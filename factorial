@@ -1,0 +1,13 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int n,ans=1;
+	cin>>n;
+	for(int i=n;i>0;i--)
+	{
+		ans=ans*n;
+	}
+	cout<<ans;
+	return 0;
+}
