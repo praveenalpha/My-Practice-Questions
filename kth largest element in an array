@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+int disp(int a[])
+{
+    for(int i=0;i<4;i++)
+    {
+        cout<<a[i];
+    }
+}
+int main() 
+{
+    int a[4],i,k;
+    for(i=0;i<4;i++)
+    {
+        cin>>a[i];
+    }
+    disp(a);
+    sort(a,a+4);
+    disp(a);
+    cin>>k;
+    cout<<a[4-k];
+        return 0; 
+} 
