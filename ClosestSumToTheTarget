@@ -1,0 +1,35 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int A[] = { 1,2,3,3,5 };
+	int B[] = { 6,8,8,13,13 };
+	int target=12,closest_value=INT16_MAX, closest_A, closest_B,flag=0;
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			if (A[i] + B[j] == target)
+			{
+				flag = 1;
+				cout << A[i] << " " << B[j];
+				break;
+			}
+			else if (target-abs(A[i] - B[j]) < closest_value)
+			{
+				closest_value = abs(A[i] - B[j]);
+				closest_A = A[i];
+				closest_B = B[j];
+			}
+		}
+		if (flag == 1)
+			break;
+		else
+			continue;
+	}
+	if(flag==0)
+		cout << closest_A<<" " << closest_B;
+	
+	cin.get();
+	return 0;
+}
