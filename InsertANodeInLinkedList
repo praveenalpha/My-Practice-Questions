@@ -1,0 +1,67 @@
+Node* take_input()
+{
+    int data;
+    cin >> data;
+    Node* Head = nullptr;
+    Node* Tail = nullptr;
+    while (data != -1)
+    {
+        Node* NewNode = new Node(data);
+        if (Head == nullptr)
+        {
+            Head = NewNode;
+            Tail = NewNode;
+        }
+        else
+        {
+            Tail->Next=NewNode;
+            Tail = NewNode;
+        }
+        cin >> data;
+
+    }
+    return Head;
+}
+void print(Node* Head)
+{
+    while (Head != nullptr)
+    {
+        cout << Head->Data<<" ";
+        Head = Head->Next;
+    }
+}
+Node* insert(Node* Head, int i, int data)
+{
+    int count = 0;
+    Node* NewNode = new Node(data);
+    if (i == 0)
+    {
+        NewNode->Next = Head;
+        Head = NewNode;
+        return Head;
+    }
+    else
+    {
+        Node* Temp = Head;
+        while (Temp != nullptr && count < i - 1)
+        {
+            Temp = Temp->Next;
+            count++;
+        }
+        NewNode->Next = Temp->Next;
+        Temp->Next = NewNode;
+    }
+    return Head;
+}
+int main()
+{
+    Node* Head = take_input();
+    print(Head);
+    int i, data;
+    cin >> i >> data;
+    Head = insert(Head, i, data);
+    print(Head);
+    cin.get();
+    return 0;
+    
+}
