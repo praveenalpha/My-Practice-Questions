@@ -1,0 +1,60 @@
+#include<iostream>
+#include"Node.cpp"
+using namespace std;
+Node* take_input()
+{
+	int data;
+	cin >> data;
+	Node* Head = nullptr;
+	Node* Tail = nullptr;
+	while (data != -1)
+	{
+		Node* NewNode = new Node(data);
+		if (Head == nullptr)
+		{
+			Head = NewNode;
+			Tail = NewNode;
+
+		}
+		else
+		{
+			Tail->Next = NewNode;
+			Tail = NewNode;
+		}
+		cin >> data;
+	}
+	return Head;
+}
+void print(Node* Head)
+{
+	while (Head != nullptr)
+	{
+		cout << Head->Data;
+		Head = Head->Next;
+	}
+}
+Node* reverse_linked_list(Node* Head)
+{
+	Node* current=Head;
+	Node* previous=nullptr;
+	Node* forward = Head->Next;
+	while (current != nullptr)
+	{
+		Node* forward = current->Next;
+		current->Next = previous;
+		previous = current;
+		current = forward;
+		
+	}
+	Head = previous;
+	return Head;
+}
+int main()
+{
+	Node* Head = take_input();
+	print(Head);
+	Node* Rev_Head=reverse_linked_list(Head);
+	print(Rev_Head);
+	cin.get();
+	return 0;
+}
