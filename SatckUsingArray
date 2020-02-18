@@ -1,0 +1,76 @@
+#include<iostream>
+using namespace std;
+class stack2
+{
+	int next_index;
+	int* data;
+	int capacity=4;
+public:
+	stack2()
+	{
+		data = new int[capacity];
+		next_index = 0;
+		capacity = 4;
+	}
+	bool is_empty()
+	{
+		return next_index == 0;
+	}
+	void push(int value)
+	{
+		if (next_index == capacity)
+		{
+			/*cout << "stack is full" << endl;
+			return;*/
+			int* NewData = new int[capacity * 2];
+			for (int i = 0; i < capacity; i++)
+			{
+				NewData[i] = data[i];
+			}
+			capacity *= 2;
+		}
+		data[next_index] = value;
+		next_index++;
+	}
+	int pop()
+	{
+		if (is_empty())
+		{
+			cout << "satck is empty"<<endl;
+			return 0;
+		}
+		next_index--;
+		return data[next_index];
+	}
+	int top()
+	{
+		if (is_empty())
+		{
+			cout << "stack is empty"<<endl;
+			return 0;
+		}
+		return data[next_index];
+	}
+	int size()
+	{
+		return next_index;
+	}
+
+};
+#include<iostream>
+using namespace std;
+#include"class2.cpp"
+int main()
+{
+	stack2 my_new_stack;
+	my_new_stack.push(10);
+	my_new_stack.push(20);
+	my_new_stack.push(30);
+	my_new_stack.push(40);
+	my_new_stack.push(50);
+	cout << my_new_stack.pop()<<endl;
+	cout << my_new_stack.size() << endl;
+	cout << my_new_stack.pop();
+	cout << my_new_stack.size();
+
+}
