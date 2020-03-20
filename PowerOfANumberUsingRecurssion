@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+int power_of_a_number(int x, int n)
+{
+	if (n == 0)
+		return 1;
+	int assumption = power_of_a_number(x, n - 1);
+	int ans = x * assumption;
+	return ans;
+}
+int main()
+{
+	int x=5, n=4;
+	int ans=power_of_a_number(x, n);
+	cout << ans;
+	return 0;
+}
