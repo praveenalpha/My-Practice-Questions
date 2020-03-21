@@ -1,0 +1,20 @@
+#include<iostream>
+#include<string>
+using namespace std;
+void tower_of_hanoi(string source, string destination, string helper, int n)
+{
+	if (n == 0)
+		return;
+	//Faith 1
+	tower_of_hanoi(source, helper, destination, n - 1);
+	cout << "move " << n << "th disk from " << source << " to " << destination << endl;
+	//Faith 2
+	tower_of_hanoi(helper, destination, source, n - 1);
+}
+
+int main()
+{
+	int n = 3;
+	tower_of_hanoi("source", "destination", "helper", n);
+	return 0;
+}
