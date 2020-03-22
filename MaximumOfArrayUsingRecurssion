@@ -1,0 +1,19 @@
+#include<iostream>
+using namespace std;
+int maximum_of_array(int arr[], int index, int size)
+{
+	if (index == size-1)
+		return arr[index];
+	int assumption=maximum_of_array(arr, index + 1, size);
+	if (assumption > arr[index])
+		return assumption;
+	else
+		return arr[index];
+}
+int main()
+{
+	int arr[] = { 25,32,12,3,4 };
+	int size = sizeof(arr) / sizeof(arr[0]);
+	cout<<maximum_of_array(arr, 0, size)<<endl;
+	return 0;
+}
