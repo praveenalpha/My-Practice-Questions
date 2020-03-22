@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+int find_first_index(int arr[], int data, int index, int size)
+{
+	if (index == size)
+		return -1;
+	if (arr[index] == data)
+		return index;
+	find_first_index(arr, data, index + 1, size);
+}
+int main()
+{
+	int arr[] = { 1,2,1,1,3 };
+	int size = sizeof(arr) / sizeof(arr[0]);
+	cout << find_first_index(arr, 3, 0, size) << endl;
+	return 0;
+}
