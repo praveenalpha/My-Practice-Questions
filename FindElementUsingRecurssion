@@ -1,0 +1,21 @@
+#include<iostream>
+using namespace std;
+bool find_element(int arr[], int index, int size,int data)
+{
+	if (index == size)
+		return false;
+	if (arr[index] == data)
+		return true;
+	find_element(arr, index + 1, size, data);
+}
+int main()
+{
+	int arr[] = { 1,2,3,4,5 };
+	int size = sizeof(arr) / sizeof(arr[0]);
+	if (find_element(arr, 0, size, 6))
+		cout << "YES" << endl;
+	else
+		cout << "NO" << endl;
+	return 0;
+
+}
