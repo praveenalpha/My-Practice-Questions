@@ -1,0 +1,33 @@
+#include<iostream>
+using namespace std;
+int* all_indices(int arr[], int data, int index, int size, int csf)
+{
+	if (index == size)
+	{
+		return new int[csf];
+	}
+	int* res = nullptr;
+	if (arr[index] == data)
+	{
+		res = all_indices(arr, data, index + 1, size, csf + 1);
+		res[csf] = index;
+	}
+	else
+	{
+		res = all_indices(arr, data, index + 1, size, csf);
+	}
+	return res;
+}
+
+int main()
+{
+	int arr[] = { 5,9,23,9,2,9,-1,9 };
+	int size = sizeof(arr)/sizeof(arr[0]);
+	int* ans = all_indices(arr, 9, 0, size, 0);
+	for (int i = 0; i < 4; i++)
+	{
+		cout << ans[i] << " ";
+	}
+		
+	return 0;
+}
