@@ -1,0 +1,31 @@
+#include<iostream>
+using namespace std;
+void bubble_sort(int arr[], int size, int si, int li)
+{
+	if (li == 0)
+		return;
+	if (si == li)
+	{
+		bubble_sort(arr, size, si = 0, li - 1);
+		return;
+	}
+	if (arr[si] > arr[si + 1])
+	{
+		swap(arr[si], arr[si + 1]);
+		bubble_sort(arr, size, si + 1, li);
+	}
+	else
+		bubble_sort(arr, size, si + 1, li);
+}
+int main()
+{
+	int arr[] = { 5,33,-1,15 };
+	int size = 4;
+	bubble_sort(arr, 4, 0, 3);
+	for (int i = 0; i < 4; i++)
+	{
+		cout << arr[i]<<endl;
+	}
+	return 0;
+
+}
