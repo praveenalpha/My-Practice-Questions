@@ -1,0 +1,33 @@
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+vector<string> all_substrings(string str)
+{
+	if (str.length() == 0)
+	{
+		vector<string> bc;
+		bc.push_back("");
+		return bc;
+	}
+	char ch = str[0];
+	vector<string> assumption = all_substrings(str.substr(1));
+	vector<string> my_result;
+	for (string it : assumption)
+	{
+		my_result.push_back(it);
+		my_result.push_back(ch + it);
+	}
+	return my_result;
+}
+int main()
+{
+	string str="abc";
+	vector<string> ans = all_substrings(str);
+	for (string it : ans)
+	{
+		cout << it << endl;
+	}
+	return 0;
+
+}
