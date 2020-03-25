@@ -1,0 +1,37 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+class node {
+public:
+	int data;
+	vector<node*> children;
+	node(int data)
+	{
+		this->data = data;
+		
+	}
+
+};
+void print(node* root)
+{
+	cout << root->data <<":";
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		cout << root->children[i]->data<<",";
+	}
+	cout << endl;
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		print(root->children[i]);
+	}
+}
+int main()
+{
+	node* root =new node(1);
+	node* child1 = new node(2);
+	node* child2 = new node(3);
+	root->children.push_back(child1);
+	root->children.push_back(child2);
+	print(root);
+	return 0;
+}
