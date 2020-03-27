@@ -1,0 +1,125 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<algorithm>
+using namespace std;
+class node {
+public:
+	int data;
+	vector<node*> children;
+	node(int data)
+	{
+		this->data = data;
+	}
+};
+node* take_input()
+{
+	int data;
+	cout << "enter data "<<endl;
+	cin >> data;
+	node* root = new node(data);
+	int n;
+	cout << "enter number of children: "<<endl;
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		node* child = take_input();
+		root->children.push_back(child);
+	}
+	return root;
+}
+void print(node* root)
+{
+	if (root == nullptr)
+		return;
+	cout << root->data<<":";
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		cout << root->children[i]->data<<",";
+	}
+	cout << endl;
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		print(root->children[i]);
+	}
+
+}
+node* take_input_levelwise()
+{
+	int root_data;
+	cout << "enter root data" << endl;
+	cin >> root_data;
+	node* root = new node(root_data);
+	queue<node*> pending_nodes;
+	pending_nodes.push(root);
+	while (pending_nodes.size() != 0)
+	{
+		node* front = pending_nodes.front();//we are using first node 
+		pending_nodes.pop();//deleting first node from out queue
+		cout << "enter number of children of " << front->data << endl;
+		int num_child;
+		cin >> num_child;
+		for (int i = 0; i < num_child; i++)
+		{
+			int child_data;
+			cout << "enter " << i << "th child of" << front->data << endl;
+			cin >> child_data;
+			node* child = new node(child_data);//IMPORTANT NOTE:
+											   //ALWAYS ALLOCATE NODE DYANAMICALLY
+			front->children.push_back(child);	
+			pending_nodes.push(child);
+		}
+
+	}
+	return root;
+}
+void print_level_wise(node* root)
+{
+	queue<node*> pending_nodes;
+	pending_nodes.push(root);
+	while (pending_nodes.size() != 0)
+	{
+		node* front = pending_nodes.front();
+		cout << front->data<<endl;
+		for (int i = 0; i < front->children.size(); i++)
+		{
+			pending_nodes.push(front->children[i]);
+		}
+		pending_nodes.pop();
+	}
+}
+int count_nodes(node* root)
+{
+	if (root == nullptr)
+		return 0;
+	int ans = 1;
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		ans+=count_nodes(root->children[i]);
+	}
+	return ans;
+}
+void print_all_nodes_at_k_level(node* root, int k)
+{
+	if (root == nullptr)
+		return;
+	if (k == 0)
+	{
+		cout << root->data << ",";
+	}
+	for (int i = 0; i < root->children.size(); i++)
+	{
+		print_all_nodes_at_k_level(root->children[i], k - 1);
+	}
+}
+int main()
+{
+	
+	node* root=take_input_levelwise();
+	print_level_wise(root);
+	cout <<"number of nodes are"<< count_nodes(root)<<endl;
+	cout << "nodes at level 2 are ";
+	print_all_nodes_at_k_level(root, 2);
+	return 0;
+
+}
