@@ -1,0 +1,32 @@
+#include<iostream>
+using namespace std;
+class binary_node {
+public:
+	int data;
+	binary_node* left_child;
+	binary_node* right_child;
+	binary_node(int data)
+	{
+		this->data = data;
+		left_child = nullptr;
+		right_child = nullptr;
+	}
+};
+void print(binary_node* root)
+{
+	if (root == nullptr)
+		return;
+	cout << root->data<<endl;
+	print(root->left_child);
+	print(root->right_child);
+}
+int main()
+{
+	binary_node* root = new binary_node(1);
+	binary_node* left_child = new binary_node(2);
+	binary_node* right_child = new binary_node(3);
+	root->left_child = left_child;
+	root->right_child = right_child;
+	print(root);
+	return 0;
+}
