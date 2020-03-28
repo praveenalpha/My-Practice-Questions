@@ -1,0 +1,129 @@
+#include<iostream>
+#include<queue>
+using namespace std;
+class binary_node {
+public:
+	int data;
+	binary_node* left_child;
+	binary_node* right_child;
+	binary_node(int data)
+	{
+		this->data = data;
+		left_child = nullptr;
+		right_child = nullptr;
+	}
+};
+/*void print(binary_node* root)
+{
+	if (root == nullptr)
+		return;
+
+	cout << root->data << ":";
+
+	if(root->left_child!=nullptr)
+		cout <<"L"<< root->left_child->data;
+	
+	if (root->left_child != nullptr)
+		cout << "R" << root->right_child->data;
+	cout << endl;
+	print(root->left_child);
+	print(root->right_child);
+}
+binary_node* take_input()
+{
+	int data;
+	cout << "enter data" << endl;
+	cin >> data;
+	if (data == -1)
+		return nullptr;
+	binary_node* root = new binary_node(data);
+	binary_node* left_child = take_input();
+	binary_node* right_child = take_input();
+	root->left_child = left_child;
+	root->right_child = right_child;
+	return root;
+}*/
+binary_node* take_input_level_wise()
+{
+	int data;
+	cout << "enter root data : " << endl;
+	cin >> data;
+	binary_node* root = new binary_node(data);
+	queue<binary_node*> pending_nodes;
+	pending_nodes.push(root);
+	while (pending_nodes.size() != 0)
+	{
+		binary_node* front = pending_nodes.front();
+		int left;
+		cout << "enter left data of : " << front->data<<endl;
+		cin >> left;
+		if (left != -1)
+		{
+			binary_node* Lchild = new binary_node(left);
+			front->left_child = Lchild;
+			pending_nodes.push(Lchild);
+		}
+		int right;
+		cout << "enter right child of : " << front->data << endl;
+		cin >> right;
+		if (right != -1)
+		{
+			binary_node* Rchild = new binary_node(right);
+			front->right_child = Rchild;
+			pending_nodes.push(Rchild);
+
+		}
+		pending_nodes.pop();
+	}
+	return root;
+}
+void print_level_wise(binary_node* root)
+{
+	queue<binary_node*> pending_nodes;
+	pending_nodes.push(root);
+	while (pending_nodes.size() != 0)
+	{
+		binary_node* front = pending_nodes.front();
+		cout << front->data << ":";
+		if (front->left_child != nullptr)
+			cout << "L"<<front->left_child->data;
+		if (front->right_child != nullptr)
+			cout << "R"<<front->right_child->data;
+		cout << endl;
+		pending_nodes.pop();
+		pending_nodes.push(front->left_child);
+		pending_nodes.push(front->right_child);
+	}
+}
+int count_nodes(binary_node* root)
+{
+	if(root == nullptr)
+		return 0;
+	return 1 + count_nodes(root->left_child) + count_nodes(root->right_child);
+}
+void print_inordered(binary_node* root)
+{
+	if (root == nullptr)
+		return;
+	print_inordered(root->left_child);
+	cout << root->data<<endl;
+	print_inordered(root->right_child);
+}
+void print_preordered(binary_node* root)
+{
+	if (root == nullptr)
+		return;
+	cout << root->data << endl;
+	print_preordered(root->left_child);
+	print_preordered(root->right_child);
+
+}
+int main()
+{
+	binary_node* root = take_input_level_wise();
+	print_preordered(root);
+
+	//int nodes_are = count_nodes(root);
+	//cout << "number of nodes are : " << nodes_are << endl;
+	return 0;
+}
