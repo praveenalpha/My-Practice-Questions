@@ -1,0 +1,68 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+class binary_node {
+public:
+	int data;
+	binary_node* left;
+	binary_node* right;
+	binary_node(int data)
+	{
+		this->data = data;
+		left = nullptr;
+		right = nullptr;
+	}
+};
+binary_node* binary_search(binary_node* root,int x)
+{
+	if (root == nullptr)
+		return nullptr;
+	if (root->data == x)
+		return root;
+	else if (root->data > x)
+		binary_search(root->left,x);
+	else if (root->data < x)
+		binary_search(root->right,x);
+}
+binary_node* take_input_level_wise()
+{
+	int data;
+	cout << "Enter Root Data :" << endl;
+	cin >> data;
+	binary_node* root = new binary_node(data);
+	queue<binary_node*> pending_nodes;
+	pending_nodes.push(root);
+	while (pending_nodes.size() != 0)
+	{
+		binary_node* front = pending_nodes.front();
+
+		int left;
+		cout << "Enter Left Child Of : " << front->data << endl;
+		cin >> left;
+		if (left != -1)
+		{
+			binary_node* left_child = new binary_node(left);
+			front->left = left_child;
+			pending_nodes.push(left_child);
+		}
+		int right;
+		cout << "Enter Right Child Of : " << front->data << endl;
+		cin >> right;
+		if (right != -1)
+		{
+			binary_node* right_child = new binary_node(right);
+			front->right = right_child;
+			pending_nodes.push(right_child);
+		}
+		pending_nodes.pop();
+	}
+	return root;
+}
+int main()
+{
+	binary_node* root = take_input_level_wise();
+	binary_node* ans=binary_search(root, 3);
+	cout << ans->data;
+	return 0;
+}
