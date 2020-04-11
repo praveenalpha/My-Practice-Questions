@@ -1,0 +1,71 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+template<typename t>
+class stackUsingArray {
+	vector<t> data;
+	int nextIndex;
+	int capacity;
+public:
+	stackUsingArray()
+	{
+		nextIndex=0;
+	}
+	int size()
+	{
+		return nextIndex;
+	}
+	bool isEmpty()
+	{
+		return nextIndex == 0;
+	}
+	void push(int x)
+	{
+		data.push_back(x);
+		nextIndex++;
+	}
+	/*int getMin() {
+		int Min = INT_MAX;
+		for (int i = 0; i < nextIndex; i++)
+		{
+			//cout << data[i] << endl;
+			Min = min(Min, data[i]);
+		}
+		
+		return Min;
+	}*/
+	int pop()
+	{
+		if (isEmpty())
+			return -1;
+		nextIndex--;
+		return data[nextIndex];
+	}
+	int top()
+	{
+		if (isEmpty())
+			return -1;
+		return data[nextIndex - 1];
+	}
+};
+using namespace std;
+int main()
+{
+	stackUsingArray<char>* s = new stackUsingArray<char>;
+	s->push('a');
+	s->push('b');
+	s->push('c');
+	//s->push(4);
+	//s->push(5);
+	cout<<s->pop()<<endl;
+	cout << s->top()<<endl;
+	/*cout << s->top() << endl;
+	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->size() << endl;
+	cout << s->getMin() << endl;*/
+	//cout<<s->getMin()<<endl;
+	return 0;
+}
