@@ -1,0 +1,66 @@
+#include<iostream>
+#include<vector>
+#include"StackUsingLinkedListClass.cpp"
+using namespace std;
+#include<iostream>
+using namespace std;
+template<typename t>
+class Node {
+public:
+	t data;
+	Node* next;
+	Node(t data)
+	{
+		this->data = data;
+		next = nullptr;
+	}
+};
+template<typename t>
+class  Stack {
+	Node<t>* head;
+	int size;
+public:
+	Stack()
+	{
+		head = nullptr;
+		size = 0;
+	}
+	int getSize()
+	{
+		return size;
+	}
+	bool isEmpty()
+	{
+		return size == 0;
+	}
+	void push(t x)
+	{
+		Node<t>* neNode = new Node<t>(x);
+		neNode->next = head;
+		head = neNode;
+		size++;
+	}
+	Node<t>* pop()
+	{
+		if (head == nullptr)
+			return nullptr;
+		head = head->next;
+		size--;
+	}
+	t top()
+	{
+		if (head==nullptr)
+			return 0;
+		return head->data;
+	}
+};
+int main()
+{
+	Stack<int> S;
+	S.push(3);
+	S.push(2);
+	S.push(1);
+	cout << S.top() << endl;
+	cout << S.getSize() << endl;
+	return 0;
+}
