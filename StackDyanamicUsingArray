@@ -1,0 +1,50 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+class stackUsingArray {
+	vector<int> data;
+	int nextIndex;
+	int capacity;
+public:
+	stackUsingArray()
+	{
+		nextIndex=0;
+	}
+	int size()
+	{
+		return nextIndex;
+	}
+	bool isEmpty()
+	{
+		return nextIndex == 0;
+	}
+	void push(int x)
+	{
+		data.push_back(x);
+		nextIndex++;
+	}
+	int getMin() {
+		int Min = INT_MAX;
+		for (int i = 0; i < nextIndex; i++)
+		{
+			//cout << data[i] << endl;
+			Min = min(Min, data[i]);
+		}
+		
+		return Min;
+	}
+	int pop()
+	{
+		if (isEmpty())
+			return -1;
+		nextIndex--;
+		return data[nextIndex];
+	}
+	int top()
+	{
+		if (isEmpty())
+			return -1;
+		return data[nextIndex - 1];
+	}
+};
