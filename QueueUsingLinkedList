@@ -1,0 +1,90 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+template<typename t>
+class Node {
+public:
+	t data;
+	Node* next;
+	Node(t data)
+	{
+		this->data = data;
+		next = nullptr;
+	}
+};
+template<typename t>
+class QueueUsingLinkedList {
+	Node<t>* data;
+	Node<t>* head;
+	Node<t>* tail;
+	int size;
+public:
+	QueueUsingLinkedList()
+	{
+		size = 0;
+		head = nullptr;
+		tail = nullptr;
+	}
+	int getSize()
+	{
+		return size;
+	}
+	bool isEmpty()
+	{
+		return size == 0;
+	}
+	void enqueue(t element)
+	{
+		Node<t>* neNode = new Node<t>(element);
+		if (tail == nullptr)
+		{
+			head = neNode;
+			tail = neNode;
+			size = 1;
+		}
+		else
+		{	
+			tail->next = neNode;
+			tail = neNode;
+			size++;
+		}
+	}
+	t front()
+	{
+		if (head == nullptr)
+			return 0;
+		return head->data;
+	}
+	t dequeue()
+	{
+		if (getSize() == 0)
+		{
+			return 0;
+		}
+		Node<t>* temp = head;
+		t ans = head->data;
+		head = head-> next;
+		delete temp;
+		size--;
+		return ans;
+	}
+};
+int main()
+{
+	QueueUsingLinkedList<int> q;
+	q.enqueue(10);
+	q.enqueue(20);
+	q.enqueue(30);
+	q.enqueue(40);
+	q.enqueue(50);
+	q.enqueue(60);
+	q.enqueue(70);
+	q.enqueue(80);
+	//cout << q.front->data << endl;
+	q.dequeue();
+	q.dequeue();
+	q.dequeue();
+	cout << q.getSize() << endl;
+	return 0;
+
+}
