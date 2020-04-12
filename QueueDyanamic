@@ -1,0 +1,97 @@
+#include<iostream>
+#include"Queue.cpp"
+using namespace std;
+template<typename t>
+class Queue {
+	t* data;
+	int nextIndex;
+	int firstIndex;
+	int size;
+	int capacity;
+public:
+	Queue()
+	{
+		capacity = 4;
+		data = new t[capacity];
+		firstIndex = -1;
+		nextIndex = 0;
+		size = 0;
+
+	}
+	int getSize()
+	{
+		return size;
+	}
+	bool isEmpty()
+	{
+		return size == 0;
+	}
+	void enqueue(t element)
+	{
+		if (getSize() == capacity)
+		{
+			int j = 0;
+			int* neData = new t[2 * capacity];
+			for (int i = firstIndex; i < capacity; i++)
+			{
+				neData[j++] = data[i];
+			}
+			for (int i = 0; i < firstIndex; i++)
+			{
+				neData[j++] = data[i];
+			}
+			delete[] data;
+			data = neData;
+			firstIndex = 0;
+			nextIndex = capacity;
+			capacity *= 2;
+		}
+		data[nextIndex] = element;
+		nextIndex = (nextIndex + 1) % capacity;
+		if (firstIndex == -1)
+			firstIndex = 0;
+		size++;
+	}
+	t front()
+	{
+		if (isEmpty())
+		{
+			cout << "EMPTY QUEUE" << endl;
+			return 0;
+		}
+		return data[firstIndex];
+	}
+	t dequeue()
+	{
+		if (isEmpty())
+		{
+			cout << "EMPTY QUEUE" << endl;
+			firstIndex = -1;
+			nextIndex = 0;
+			return 0;
+		}
+		size--;
+		t ans = data[firstIndex];
+		firstIndex = (firstIndex + 1) % capacity;
+		return ans;
+	}
+};
+int main()
+{
+	Queue<int> q;
+
+	q.enqueue(10);
+	q.enqueue(20);
+	q.enqueue(30);
+	q.enqueue(40);
+	q.enqueue(50);
+	q.enqueue(60);
+	cout << q.front() << endl;
+	q.dequeue();
+	q.dequeue();
+	q.dequeue();
+	cout << q.getSize()<<endl;
+	cout << q.isEmpty() << endl;
+
+	return 0;
+}
