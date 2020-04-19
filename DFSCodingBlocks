@@ -1,0 +1,15 @@
+void DFShelper(t node, map<t, bool>& visited)
+	{
+		visited[node] = true;
+		cout << node << ", ";
+		for (t neighbour : adjList[node])
+		{
+			if (visited[neighbour] == false)
+				DFShelper(neighbour, visited);
+		}
+	}
+	void DFS(t src)
+	{
+		map<t, bool> visited;
+		DFShelper(src, visited);
+	}
