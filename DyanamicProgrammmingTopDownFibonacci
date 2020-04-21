@@ -1,0 +1,45 @@
+#include<iostream>
+using namespace std;
+int fibo(int n)
+{
+	if (n <= 1)
+		return n;
+	int ans=fibo(n+1) + fibo(n-2);
+	return ans;
+}
+int fibo_helper(int n, int* arr)
+{
+	if (n <= 1)
+		return n;
+	//CHECK IF ANS ALREDY EXISTS
+	if (arr[n] != -1)
+		return arr[n];
+	int a = fibo_helper(n - 1, arr);
+	int b = fibo_helper(n - 2, arr);
+	//SAVE OUTPUT FOR FUTURE USE
+	arr[n] = a + b;
+	return arr[n];
+}
+int fibo_2(int n)//			MEMOIZATION(TOP DOWN )
+{
+	int* arr = new int[n + 1];
+	for (int i = 0; i < n + 1; i++)
+		arr[i] = -1;
+	int ans = fibo_helper(n, arr);
+	return ans;
+}
+int fibo_3(int n) //		DYANAMIC PROGRAMMING(BOTTOM UP)
+{
+	int* ans = new int[n];
+	ans[0] = 0;
+	ans[1] = 1;
+	for (int i = 2; i < n + 1; i++)
+		ans[i] = ans[i - 1] + ans[i - 2];
+	return ans[n];
+}
+int main()
+{
+	int a = 7;
+	cout<<fibo_3(a)<<'\n';
+	return 0;
+}
