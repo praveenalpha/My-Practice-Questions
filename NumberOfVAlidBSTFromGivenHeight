@@ -1,0 +1,25 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+int numberOfBST(int h)
+{
+	if (h <= 1)
+		return 1;//null node also counts as 1 node
+	long x = numberOfBST(h - 1);//WE TAKE ANS % 10^9+7 SO THAT OUR RESULT DOSNT EXCEED INT CAPACITY(-2^31 TO 2^31-1)
+	int mod =(int) (pow(10 , 9) + 7);
+	// INT ANS=(A+B)*C		NOTE HERE A , B, C& ANS ALL ARE INT TYPE
+	//						WHEN A+B IS COMPUTED , RESULT IS STORED IN A TEMPORARY BUFFER
+	//						THIS TEMPORARY BUFFER WILL ALSO BE OF TYPE INT
+	//						THEN RESULT WILL BE MUTIPLIED BY C
+
+
+	int y = numberOfBST(h - 2);//THUS WE NEED TO STORE OUR VARIABLES IN INT DATA TYPE BEFORE TAKING THEIR MOD TO GET VALID ANSWER
+	return  (x * x)%mod + (2 * x * y)%mod;
+}
+int main()
+{
+	int h;
+	cin >> h;
+	cout << numberOfBST(h);
+	return 0;
+}
