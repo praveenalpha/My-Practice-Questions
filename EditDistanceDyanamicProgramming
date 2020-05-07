@@ -1,0 +1,27 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+int EditDistance(string s, string t)
+{
+	if (s.length() == 0 || t.length() == 0)
+		return max(s.length(),t.length());
+	int ans = 0;
+	if (s[0] == t[0])
+		ans = EditDistance(s.substr(1), t.substr(1));
+	else
+	{
+		//INSERT
+		int x = EditDistance(s.substr(1), t) + 1;
+		//DELETE
+		int y = EditDistance(s, t.substr(1)) + 1;
+		//REPLACE
+		int z = EditDistance(s.substr(1), t.substr(1)) + 1;
+		ans = min(x, min(y, z));
+	}
+}
+int main()
+{
+
+	return 0;
+}
