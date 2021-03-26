@@ -1,0 +1,25 @@
+function job(data) {
+    return new Promise( function(resolve, reject) {
+        if(isNaN(data)){
+            
+            console.log("isNAN", typeof(data));
+            reject("error");
+        }
+        else if(data % 2 == 1){
+            console.log("odd",typeof(data));
+            setTimeout( function(){
+                resolve("odd");
+            }, 1000);
+        }
+        else if(data % 2 == 0){
+            console.log("even", typeof(data));
+            setTimeout( function(){
+                reject("even");
+            }, 2000);
+        }
+    })
+    // return promise;
+    // return something;
+}
+
+module.exports = job;
