@@ -1,0 +1,83 @@
+
+
+require('chromedriver');
+const fs = require('fs');
+let wd = require('selenium-webdriver');
+let keysArr = ["PlayerName", "WicketBy", "Runs", "Balls", "Fours", "Sixes", "SR"];
+let finalData = {};
+let totalMatches = 0;
+let matchesCovered = 0;
+
+
+
+function wait(ms) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(ms)
+      }, ms )
+    })
+  }
+
+async function main()
+{
+    let browser = new wd.Builder().forBrowser('chrome').build();
+    await browser.get("https://www.cricbuzz.com/cricket-series/3130/indian-premier-league-2020/matches");
+    await browser.wait(wd.until.elementsLocated(wd.By.css(".cb-col-60.cb-col.cb-srs-mtchs-tm")));
+    let matches = await browser.findElements(wd.By.css(".cb-col-60.cb-col.cb-srs-mtchs-tm"));
+    let urlArr = [];
+    for(let i = 0; i < 3; i++)
+    {
+        let url = await matches[i].findElement(wd.By.css(".text-hvr-underline")).getAttribute('href');
+        urlArr.push(url);
+    }
+    console.log(urlArr);
+
+    totalMatches = urlArr.length;
+    for(let i = 0; i < urlArr.length; i++)
+    {
+        updateRecords(urlArr[i]);
+    }
+}
+
+async function updateRecords(url)
+{
+    let browser = new wd.Builder().forBrowser('chrome').build();
+    await browser.get(url);
+
+    await browser.wait(wd.until.elementsLocated(wd.By.css(".cb-nav-bar a")));
+    let navbar = await browser.findElements(wd.By.css(".cb-nav-bar a"));
+    await navbar[1].click();
+
+    await browser.wait(wd.until.elementsLocated(wd.By.css(".cb-col.cb-col-100.cb-ltst-wgt-hdr")));
+    let tables = await browser.findElements(wd.By.css(".cb-col.cb-col-100.cb-ltst-wgt-hdr"));
+    
+    await wait(2000);
+    let team1Name = await tables[0].findElement(wd.By.css(".cb-col.cb-col-100.cb-scrd-hdr-rw span")).getAttribute("innerText");
+    let team1Players = await tables[0].findElements(wd.By.css(".cb-col.cb-col-100.cb-scrd-itms"));
+
+    let team1Obj = {};
+    for(let i = 0; i < 3; i++)
+    {
+        let columns = await team1Players[i].findElements(wd.By.css("div"));
+        if(columns.length != 7) continue;
+
+        let pName = await columns[0].getAttribute("innerText");
+        let obj = {};
+        for(let j = 2; j < columns.length; j++)
+        {
+            obj[keysArr[j]] = await columns[j].getAttribute("innerText");
+        }
+
+        team1Obj[pName] = obj; 
+    }
+    
+    finalData[team1Name] = team1Obj;
+
+    matchesCovered++;
+    if(matchesCovered == totalMatches)
+    {
+        fs.writeFileSync("test.json", JSON.stringify(finalData));
+    }
+}
+
+main();
