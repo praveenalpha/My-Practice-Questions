@@ -1,0 +1,14 @@
+function b() {
+    return new Promise(resolve => {
+        setTimeout(function() {resolve('hello world')}, 3000);
+    });
+}
+
+async function job() {
+    let ans = await b();
+    return  ans;
+    // console.log();
+}
+
+// job();
+module.exports = job;
