@@ -1,0 +1,22 @@
+class Solution {
+public:
+    
+    int lengthOfLIS(vector<int>& a) {
+       int n = a.size();
+        // cout<<n;
+       vector<int> dp(n, 1);
+       int omax = 1;
+       for(int i=0;i<n;i++){
+           int j = i-1, smax = 1;
+           while(j >= 0){
+               if(a[j] < a[i]){
+                   smax = max(smax, dp[j] + 1);
+               }
+               j--;
+           }
+           dp[i] = smax;
+           omax = max(smax, omax);
+       }
+       return omax;
+    }
+};
